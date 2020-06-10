@@ -18,11 +18,11 @@ const bfs = function (pairs, source, target) {
   queue.push(source);
   while (queue.length !== 0) {
     const node = queue.shift();
-    if (node == target) return true;
+    if (node === target) return true;
     visitedList.push(node);
     const edges = findEdges(pairs, node);
     edges.forEach(edge => {
-      if (!visitedList.includes(edge)) queue.push(edge);
+      if (!visitedList.includes(edge) && edge != node) queue.push(edge);
     });
   }
   return false;
