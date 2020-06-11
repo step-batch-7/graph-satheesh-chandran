@@ -3,6 +3,7 @@ const { bfs } = require('./src/graph.js');
 
 const main = function () {
   const pairs = JSON.parse(readFileSync('./src/graph.json', 'utf8'));
+
   console.log(bfs(pairs, 'bb', 'jj'));
   console.log(bfs(pairs, 'jj', 'aa'));
   console.log(bfs(pairs, 'aa', 'hh'));

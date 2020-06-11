@@ -4,15 +4,17 @@
 // To => to
 // Should return true.
 
-const findEdges = function (pairs, root) {
-  const edges = [];
-  pairs.forEach(pair => {
-    if (pair[0] == root) edges.push(pair[1]);
+const parsePair = function (pairs) {
+  const parseList = {};
+  pairs.forEach(([key, value]) => {
+    if (parseList[key]) return parseList[key].push(value);
+    parseList[key] = [value];
   });
-  return edges;
+  return parseList;
 };
 
 const bfs = function (pairs, source, target) {
+  const adjacent = parsePair(pairs);
   const queue = [];
   const visitedList = [];
   queue.push(source);
@@ -20,9 +22,9 @@ const bfs = function (pairs, source, target) {
     const node = queue.shift();
     if (node === target) return true;
     visitedList.push(node);
-    const edges = findEdges(pairs, node);
+    const edges = adjacent[node];
     edges.forEach(edge => {
-      if (!visitedList.includes(edge) && edge != node) queue.push(edge);
+      if (!visitedList.includes(edge)) queue.push(edge);
     });
   }
   return false;
