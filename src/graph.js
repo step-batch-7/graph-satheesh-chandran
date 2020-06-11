@@ -30,4 +30,13 @@ const bfs = function (pairs, source, target) {
   return false;
 };
 
-module.exports = { bfs };
+const dfs = function (table, source, target, visited = []) {
+  const edges = table[source] || [];
+  if (edges.includes(target)) return true;
+  visited.push(source);
+  const nonVisitedEdges = edges.filter(edge => !visited.includes(edge));
+  if (nonVisitedEdges.length == 0) return false;
+  return nonVisitedEdges.some(edge => dfs(table, edge, target, visited));
+};
+
+module.exports = { bfs, createAdjacencyTable, dfs };
