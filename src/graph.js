@@ -22,7 +22,7 @@ const bfs = function (pairs, source, target) {
     const node = queue.shift();
     if (node === target) return true;
     visitedList.push(node);
-    const edges = adjacent[node];
+    const edges = adjacent[node] || [];
     edges.forEach(edge => {
       if (!visitedList.includes(edge)) queue.push(edge);
     });
