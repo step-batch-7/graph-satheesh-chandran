@@ -4,28 +4,28 @@
 // To => to
 // Should return true.
 
-const parsePair = function (pairs) {
-  const parseList = {};
+const createAdjacencyTable = function (pairs) {
+  const table = {};
   pairs.forEach(([key, value]) => {
-    if (parseList[key]) return parseList[key].push(value);
-    parseList[key] = [value];
+    if (table[key]) return table[key].push(value);
+    table[key] = [value];
   });
-  return parseList;
+  return table;
 };
 
 const bfs = function (pairs, source, target) {
-  const adjacent = parsePair(pairs);
-  const queue = [];
+  const table = createAdjacencyTable(pairs);
+  const queue = [source];
   const visitedList = [];
-  queue.push(source);
   while (queue.length !== 0) {
     const node = queue.shift();
-    if (node === target) return true;
-    visitedList.push(node);
-    const edges = adjacent[node] || [];
+    const edges = table[node] || [];
+    if (edges.includes(target)) return true;
     edges.forEach(edge => {
-      if (!visitedList.includes(edge)) queue.push(edge);
+      const isAlreadyExist = visitedList.includes(edge);
+      if (!isAlreadyExist) queue.push(edge);
     });
+    visitedList.push(node);
   }
   return false;
 };
